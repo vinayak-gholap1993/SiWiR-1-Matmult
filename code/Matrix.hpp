@@ -21,9 +21,9 @@ class Matrix
 
   friend std::ostream& operator<<(std::ostream& out,const Matrix& obj)
  {  
-  for(u_int row= 0 ; row<obj._rows ;++row)
+  for(uint16_t row= 0 ; row<obj._rows ;++row)
     {
-    for(u_int col= 0 ;col<obj._columns ;++col)
+    for(uint16_t col= 0 ;col<obj._columns ;++col)
       {
 	out<< obj._vecObject[row * obj._columns + col]<<"\t"; 
       }
@@ -44,7 +44,7 @@ public:
      * @param numRow Number of row in matrix
      * @param numCol Number of column in matrix
      * **/
-  Matrix(const u_int &numRow,const u_int &numCol);
+  Matrix(const uint16_t& numRow, const uint16_t& numCol);
     /**
      * Default Destructor 
      * **/
@@ -55,7 +55,7 @@ public:
     /**
      * 	Get number of rows
      * **/
-  inline u_int getNumberOfRow(void)const
+  inline uint16_t getNumberOfRow(void)const
     {
       //std::cout<< " number of rows "<<this->_rows;
       return this->_rows;
@@ -70,9 +70,9 @@ public:
       return this->_columns;
     }
     /**
-     * Check matrix is squar or not
+     * Check matrix is square or not
      * **/
-  inline bool isSquarMatrix(void)const
+  inline bool isSquareMatrix(void)const
     {
       return (this->_rows == this->_columns);
     }
@@ -123,9 +123,9 @@ public:
   * **/
   Matrix operator*(const Matrix& B);
   
-  void navierImplimentation(const Matrix& A, const Matrix& B, Matrix& C);
+  void NaiveImplimentation(const Matrix& A, const Matrix& B, Matrix& C);
   
-  void optiImlimentation(const Matrix& A,const Matrix& B,Matrix& C);
+  void OptiImplimentation(const Matrix& A,const Matrix& B,Matrix& C);
   
 // --------------------------------- Read and write data from file -----------------------------------
   /**
