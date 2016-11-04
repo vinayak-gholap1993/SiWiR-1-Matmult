@@ -2,46 +2,41 @@
 #include "IncludeFiles.hpp"
 #include "Matrix.hpp"
 
-#ifdef USE_LIKWID
-extern "C" {
-#include <likwid.h>
-}
-#endif
 
 
 int main(int argc, char *argv[])
 {
 try
 {
-    std::cout << BOLD(FBLU("\n ----------------- Program starts from here ------------- \n"));
+  std::cout << BOLD(FBLU("\n ----------------- Program starts from here ------------- \n"));
     
   std::string A_inputFile=argv[1];
   std::string B_inputFile=argv[2];
   std::string C_outputFile=argv[3];
   
+ siwir::Timer time; 
   
-Matrix A,B;	// object of matrix class
+Matrix A,B,D;	// object of matrix class
 Matrix call; 
- std::cout<<" \n "<<B.getNumberOfColumn();
  
- std::cout<<"no of parameter is... "<<argc<<std::endl;
+  std::cout<<"no of parameter is... "<<argc<<std::endl;
   A.readFile(A_inputFile);
   B.readFile(B_inputFile);
 
   Matrix C(A.getNumberOfRow(),B.getNumberOfColumn());	//object create
- 
-#ifdef USE_LIKWID
-   likwid_markerInit();
-   likwid_markerStartRegion( "vec" );
-#endif   
- 
-   call.navierImplimentation(A,B,C);
- 
-#ifdef USE_LIKWID
-   likwid_markerStopRegion( "vec" );
-    likwid_markerClose();
-#endif   
-   
+  call.navierImplimentation(A,B,C);
+  //time.reset();   //timer start
+ // C = A * B;
+  //real runtime = time.elapsed();  //runtime
+  /*  
+  time.reset();   //timer start
+  call.optiImlimentation(A,B,C);
+  real runtime1 = time.elapsed();  //runtime
+  */
+  //std::cout << BOLD(FGRN("\n runtime of navier is... ")) << runtime;
+  //std::cout << BOLD(FGRN("\n runtime of opti. is... ")) << runtime1;
+  
+  
   C.writeFile(C_outputFile);
 }
   

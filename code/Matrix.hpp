@@ -144,7 +144,7 @@ public:
     
 //--------------------------------------- private function ---------------------------------    
   
-private:
+
   std::vector< real > _vecObject;  
   u_int _rows;
   u_int _columns;

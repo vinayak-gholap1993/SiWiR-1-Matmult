@@ -36,4 +36,4 @@ $(SRC).o: Makefile $(SRC).cpp  $(HEADER)  Makefile
 
 clean:
 	@$(RM) -rf *.o matmult
-	@$(RM) -rf C.in
+	@$(RM) -rf *.out

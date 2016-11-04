@@ -19,6 +19,8 @@
 #include <fstream>
 
 //file which made by us
+#include "Timer.h"
+
 #include "type.hpp"
 
 #include "Matrix.hpp"
