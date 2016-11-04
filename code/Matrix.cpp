@@ -100,7 +100,7 @@ void Matrix::NaiveImplimentation(const Matrix& A, const Matrix& B, Matrix& C)
   } //ii
 }
 
-
+/*
 // loop interchange gives better result compare to navierImplimentation
 void Matrix::OptiImplimentation( const Matrix& A,const Matrix& B,Matrix& C)
 {
@@ -118,6 +118,41 @@ void Matrix::OptiImplimentation( const Matrix& A,const Matrix& B,Matrix& C)
       //temp = 0.0;
     }  //k  
 }
+*/
+
+void Matrix::OptiImplimentation(const Matrix& A, const Matrix& B, Matrix& C)
+{
+
+  assert((A._columns == B._rows) || " Matrix A columns and B rows do not match -navierImplimentation ");	///assert
+  register real temp = 0.0;
+  //uint16_t block = 8000;
+  
+  for(u_int ii = 0; ii <A._rows; ii+=block)
+    {                                       					// blocking for i loop with blocksize of "block"
+      u_int istart = ii, iend = std::min(ii + block -1,A._rows); 		// start value and end value of block in i loop
+
+      for(u_int kk = 0; kk <B._columns; kk+=block)
+      {                                     					// blocking for j loop with blocksize of "block"
+
+          u_int kstart = kk, kend = std::min(kk + block -1,B._columns); 	// start value and end value of block in j loop
+
+          for( u_int i = istart; i < iend ; ++i)	//Matrix A
+          {
+	      temp = i * B._columns;
+              for( u_int k = kstart; k < kend ; ++k)	//Matrix B
+              {
+                  for( u_int j = 0; j< B._rows ; j++)	//Matrix C
+                  {
+
+                      C._vecObject[ temp + j] += A(i,k) * B(k,j);
+                  } //k
+ 
+              }  //j
+          } //i
+      } // jj
+  } //ii
+}
+
 
 
 

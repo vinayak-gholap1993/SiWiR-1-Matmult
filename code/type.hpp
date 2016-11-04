@@ -9,7 +9,7 @@
 typedef double real;
 typedef unsigned int u_int;
 //typedef unsigned int block;
-#define block 8000
+#define block 1000
 
 enum{
   rows = 3 ,

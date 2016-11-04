@@ -46,10 +46,10 @@ Matrix call;
   B.readFile(B_inputFile);
 
   Matrix C(A.getNumberOfRow(),B.getNumberOfColumn());	//object create
-/*
+
   const u_int lda = std::min(A._rows,A._columns);
   const u_int ldb = std::min(B._rows,B._columns);
-  const u_int ldc = std::min(C._rows,C._columns);*/
+  const u_int ldc = std::min(C._rows,C._columns);
   
   time.reset();   //timer start
   call.NaiveImplimentation(A,B,C);
@@ -74,27 +74,27 @@ Matrix call;
 #ifdef USE_LIKWID
    likwid_markerStopRegion( "Opti" );
 #endif
-  
+
 //------------------------------------------------------- Blas ------------------------------------------------------------   
-  /* 
+ 
 #ifdef USE_LIKWID
    likwid_markerStartRegion( "Blas" );
 #endif
    
    
   time.reset();   //timer start
-  cblas_dgemm( CblasRowMajor, CblasNoTrans, CblasNoTrans, A._rows, A._columns, B._columns, 1.0, A._vecObject, lda, B._vecObject, ldb, 0.0, C._vecObject, ldc );
+  cblas_dgemm( CblasRowMajor, CblasNoTrans, CblasNoTrans, A._rows, A._columns, B._columns, 1.0, A._vecObject.data(), lda, B._vecObject.data(), ldb, 0.0, C._vecObject.data(), ldc );
   real runtimeBlas = time.elapsed();  //runtime
 
   
 #ifdef USE_LIKWID
    likwid_markerStopRegion( "Blas" );
 #endif
- */  
+  
    
   std::cout << BOLD(FGRN("\n runtime of naive is... ")) << runtime;
-  std::cout << BOLD(FGRN("\n runtime of opti. is... ")) << runtime1;
- // std::cout << BOLD(FGRN("\n runtime of opti. is... ")) << runtimeBlas;
+ std::cout << BOLD(FGRN("\n runtime of opti. is... ")) << runtime1;
+  std::cout << BOLD(FGRN("\n runtime of blas is... ")) << runtimeBlas;
   
   
   C.writeFile(C_outputFile);
