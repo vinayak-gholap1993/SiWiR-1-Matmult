@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++0x -Wall -Wextra -Wshadow -Werror -O3 -mavx -DNDEBUG
+CXXFLAGS = -std=c++0x -Wall -Wextra -Wshadow -Werror -O3 -DNDEBUG  -march=native -ffast-math -mavx
 
 INCLUDES = 	
 LDFLAGS =

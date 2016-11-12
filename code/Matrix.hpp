@@ -23,7 +23,7 @@ class Matrix
  {  
   for(uint16_t row= 0 ; row<obj._rows ;++row)
     {
-    for(uint16_t col= 0 ;col<obj._columns ;++col)
+    for(uint16_t col= 0 ;col<obj._columns  ;++col)
       {
 	out<< obj._vecObject[row * obj._columns + col]<<"\t"; 
       }
@@ -105,13 +105,13 @@ public:
   inline real operator()(const u_int &rowIndex,const u_int &colIndex)
     {
       assert(rowIndex < _rows && colIndex < _columns);			///assert
-      return this->_vecObject[rowIndex * this->_columns + colIndex];
+      return this->_vecObject[rowIndex * (this->_columns) + colIndex];
     }
     
   inline real operator()(const u_int &rowIndex,const u_int &colIndex)const
     {
        assert(rowIndex < _rows && colIndex < _columns);			//assert
-      return this->_vecObject[rowIndex * this->_columns + colIndex];
+      return this->_vecObject[rowIndex * (this->_columns) + colIndex];
     }
    
 //-----------------------------  Perform Arithmetic Operation ----------------------------------------
@@ -123,11 +123,34 @@ public:
   * **/
   Matrix operator*(const Matrix& B);
   
+  /**
+   * Simple matrix - matrix multiplication and padding
+   * @param A  constant of object of matrix class with reference, const becuase it does't change ,we just read data
+   * @param B  constant of object of matrix class with reference, const becuase it does't change ,we just read data
+   * @param C  object of matrix class with reference as we don't want to copy whole matrix
+   * **/
+  
   void NaiveImplimentation(const Matrix& A, const Matrix& B, Matrix& C);
   
-  void OptiImplimentation(const Matrix& A,const Matrix& B,Matrix& C);
+  /**
+   * Basic Matrix Matrix Implementation without any optimization
+   * @param A  constant of object of matrix class with reference, const becuase it does't change ,we just read data
+   * @param B  constant of object of matrix class with reference, const becuase it does't change ,we just read data
+   * @param C  object of matrix class with reference as we don't want to copy whole matrix
+   * **/
   
+  void UnrollingImplimentation(const Matrix& A,const Matrix& B,Matrix& C);
+  
+  /**
+   * Unrolling j loop
+   * @param A  constant of object of matrix class with reference, const becuase it does't change ,we just read data
+   * @param B  constant of object of matrix class with reference, const becuase it does't change ,we just read data
+   * @param C  object of matrix class with reference as we don't want to copy whole matrix
+   * **/
   void BlockImplimentation(const Matrix& A, const Matrix& B, Matrix& C);
+  void BlockingAndUnrollingImplimentation(const Matrix& A, const Matrix& B, Matrix& C);
+  
+  
 // --------------------------------- Read and write data from file -----------------------------------
   /**
    * Read data from file named fileName
@@ -151,8 +174,6 @@ public:
   u_int _columns;
     
 };  //class Matrix
-
-//--------------------------------------------------------------------------------------------------- Implimentation ----------------------------------------------------------------------------
 
 
 

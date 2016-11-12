@@ -1,6 +1,10 @@
 #!/bin/bash
 
-CORE="0"
+clear
+make clean
+make
+
+CORE="2"
 PROGRAM="matmult"
 echo Profiling program $PROGRAM on core $CORE
 
@@ -12,7 +16,7 @@ do
 	echo Measuring performance for event group $i \
 	     using the marker api...
 
-        likwid-perfctr -C $CORE -g $i -m ./$PROGRAM A2.in B2.in new.out
+        likwid-perfctr -C $CORE -g $i -m ./$PROGRAM 2048*2048-1 2048*2048-2 new.out
 
 	echo ================================================================================
 	echo

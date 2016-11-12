@@ -8,12 +8,7 @@
 
 typedef double real;
 typedef unsigned int u_int;
-//typedef unsigned int block;
-#define iblock 500
-#define jblock 500
-#define kblock 500
-#define strideforNaive 1
-#define strideforBlocking 1
+typedef std::vector<real> vector;
 enum{
   rows = 3 ,
   columns = 2
