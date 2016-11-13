@@ -1,8 +1,5 @@
 #!/bin/bash
 
-clear
-make clean
-make
 
 CORE="2"
 PROGRAM="matmult"
@@ -16,7 +13,7 @@ do
 	echo Measuring performance for event group $i \
 	     using the marker api...
 
-        likwid-perfctr -C $CORE -g $i -m ./$PROGRAM 2048*2048-1 2048*2048-2 new.out
+        likwid-perfctr -C $CORE -g $i -m ./$PROGRAM 2048*2048-1 2048*2048-2 C.out
 
 	echo ================================================================================
 	echo

@@ -17,6 +17,13 @@ extern "C" {
 
 
 
+/**
+ * multiplication of two matrix with blocking and unrolling
+ * @param ::vector&A object of vector
+ * @param ::vector&B object of vector
+ * @param ::vector&C object of vector
+ * @param loopIter blocking size
+ * **/
 void matrixMulti(::vector& A,::vector& B,::vector& C,const u_int& loopIter)
 {
   {
@@ -91,13 +98,13 @@ void sum(::vector& A, ::vector& B, ::vector& C,const u_int& loopIter)
 
         C[i * loopIter + j] = A[i * loopIter + j] + B[i * loopIter + j];
         C[i * loopIter + (j+1)] = A[i * loopIter + (j+1)] - B[i * loopIter + (j+1)];
-          C[i * loopIter + (j+2)] = A[i * loopIter + (j+2)] - B[i * loopIter + (j+2)];
-            C[i * loopIter + (j+3)] = A[i * loopIter + (j+3)] - B[i * loopIter + (j+3)];
+        C[i * loopIter + (j+2)] = A[i * loopIter + (j+2)] - B[i * loopIter + (j+2)];
+        C[i * loopIter + (j+3)] = A[i * loopIter + (j+3)] - B[i * loopIter + (j+3)];
 
-              C[i * loopIter + (j+4)] = A[i * loopIter + (j+4)] - B[i * loopIter + (j+4)];
-                C[i * loopIter + (j+5)] = A[i * loopIter + (j+5)] - B[i * loopIter + (j+5)];
-                  C[i * loopIter + (j+6)] = A[i * loopIter + (j+6)] - B[i * loopIter + (j+6)];
-                    C[i * loopIter + (j+7)] = A[i * loopIter + (j+7)] - B[i * loopIter + (j+7)];
+        C[i * loopIter + (j+4)] = A[i * loopIter + (j+4)] - B[i * loopIter + (j+4)];
+        C[i * loopIter + (j+5)] = A[i * loopIter + (j+5)] - B[i * loopIter + (j+5)];
+        C[i * loopIter + (j+6)] = A[i * loopIter + (j+6)] - B[i * loopIter + (j+6)];
+        C[i * loopIter + (j+7)] = A[i * loopIter + (j+7)] - B[i * loopIter + (j+7)];
         //std::cout<<"\n "<<A[i * loopIter + j] <<" "<< B[i * loopIter + j];
       } //j
    }//i
@@ -120,14 +127,14 @@ void sub(::vector& A, ::vector& B, ::vector& C,const u_int& loopIter)
         //if (loopIter==2) std::cout<<"\n "<<A[i * loopIter + j] <<" "<< B[i * loopIter + j];
 
         C[i * loopIter + j] = A[i * loopIter + j] - B[i * loopIter + j];
-         C[i * loopIter + (j+1)] = A[i * loopIter + (j+1)] - B[i * loopIter + (j+1)];
-           C[i * loopIter + (j+2)] = A[i * loopIter + (j+2)] - B[i * loopIter + (j+2)];
-             C[i * loopIter + (j+3)] = A[i * loopIter + (j+3)] - B[i * loopIter + (j+3)];
+        C[i * loopIter + (j+1)] = A[i * loopIter + (j+1)] - B[i * loopIter + (j+1)];
+        C[i * loopIter + (j+2)] = A[i * loopIter + (j+2)] - B[i * loopIter + (j+2)];
+        C[i * loopIter + (j+3)] = A[i * loopIter + (j+3)] - B[i * loopIter + (j+3)];
 
-               C[i * loopIter + (j+4)] = A[i * loopIter + (j+4)] - B[i * loopIter + (j+4)];
-                 C[i * loopIter + (j+5)] = A[i * loopIter + (j+5)] - B[i * loopIter + (j+5)];
-                   C[i * loopIter + (j+6)] = A[i * loopIter + (j+6)] - B[i * loopIter + (j+6)];
-                     C[i * loopIter + (j+7)] = A[i * loopIter + (j+7)] - B[i * loopIter + (j+7)];
+        C[i * loopIter + (j+4)] = A[i * loopIter + (j+4)] - B[i * loopIter + (j+4)];
+        C[i * loopIter + (j+5)] = A[i * loopIter + (j+5)] - B[i * loopIter + (j+5)];
+        C[i * loopIter + (j+6)] = A[i * loopIter + (j+6)] - B[i * loopIter + (j+6)];
+        C[i * loopIter + (j+7)] = A[i * loopIter + (j+7)] - B[i * loopIter + (j+7)];
 
       } //j
    }//i
@@ -257,7 +264,7 @@ try
   Matrix C_U(A.getNumberOfRow(),B.getNumberOfColumn());
   Matrix C_B(A.getNumberOfRow(),B.getNumberOfColumn());
   Matrix C_U_B(A.getNumberOfRow(),B.getNumberOfColumn());
-  Matrix C_S(A.getNumberOfRow(),B.getNumberOfColumn());
+  
 
   Matrix dummy(A.getNumberOfRow(),B.getNumberOfColumn());
 
@@ -265,119 +272,116 @@ try
     for(u_int i = 0; i<2 ; ++i)
         C.BlockImplimentation(A,B,dummy);
 
-  //------------------------------------- Start likwid -------  
-#ifdef USE_LIKWID
-   likwid_markerInit();
-#endif
+    //------------------------------------- Start likwid -------
+  #ifdef USE_LIKWID
+     likwid_markerInit();
+  #endif
+
+  
 //---------------------------------------- NaiveImplimentation ----------------------------------------
 
 #ifdef USE_LIKWID
    likwid_markerStartRegion( "Naive" );
-#endif  
+#endif
 
   time.reset();   //timer start
   call.NaiveImplimentation(A,B,C);
   //real runtimeN = time.elapsed();  //runtime
-    
-  
+  //std::cout << BOLD(FGRN("\n runtime for Naive ...		")) << runtimeN;
+
 #ifdef USE_LIKWID
    likwid_markerStopRegion( "Naive" );
 #endif
 
- 
-//---------------------------------------------- UnrollingImplimentation ---------------------------------------------
-
+  //---------------------------------------------- UnrollingImplimentation ---------------------------------------------
 #ifdef USE_LIKWID
    likwid_markerStartRegion( "Unrolling" );
 #endif
    
-   
   time.reset();   //timer start
   call.UnrollingImplimentation(A,B,C_U);
   //real runtimeU = time.elapsed();  //runtime
+  //std::cout << BOLD(FGRN("\n runtime for Unroll ...	        ")) << runtimeU;
 
-  
 #ifdef USE_LIKWID
    likwid_markerStopRegion( "Unrolling" );
 #endif
-
-//---------------------------------------------- BlockImplimentation ---------------------------------------------
-
+   //---------------------------------------------- BlockImplimentation ---------------------------------------------
 #ifdef USE_LIKWID
    likwid_markerStartRegion( "Block" );
 #endif
-   
-   
+ 
   time.reset();   //timer start
   call.BlockImplimentation(A,B,C_B);
   //real runtimeB = time.elapsed();  //runtime
+  //std::cout << BOLD(FGRN("\n runtime for Blocking ...	")) << runtimeB;
 
-  
 #ifdef USE_LIKWID
    likwid_markerStopRegion( "Block" );
 #endif
 
 //---------------------------------------------- BlockingAndUnrollingImplimentation ---------------------------------------------
 
-   #ifdef USE_LIKWID
-      likwid_markerStartRegion( "Blocking&Unrolling" );
-   #endif
-
+#ifdef USE_LIKWID
+   likwid_markerStartRegion( "Blocking&Unrolling" );
+#endif
 
      time.reset();   //timer start
      call.BlockingAndUnrollingImplimentation(A,B,C_U_B);
-     //real runtimeB = time.elapsed();  //runtime
+     //real runtimeBU = time.elapsed();  //runtime
+     //std::cout << BOLD(FGRN("\n runtime for Block And Unroll...")) << runtimeBU;
+
+#ifdef USE_LIKWID
+   likwid_markerStopRegion( "Blocking&Unrolling" );
+#endif
+
+//---------------------------------------- StrassenImplimentation ----------------------------------------
+  
 
 
-   #ifdef USE_LIKWID
-      likwid_markerStopRegion( "Blocking&Unrolling" );
-   #endif
+   if((A._columns == A._rows) && (B._columns == B._rows))
+   {
 
-      //---------------------------------------- StrassenImplimentation ----------------------------------------
+#ifdef USE_LIKWID
+   likwid_markerStartRegion( "Strassen" );
+#endif
 
-
-      #ifdef USE_LIKWID
-         likwid_markerStartRegion( "Strassen" );
-      #endif
-
+      Matrix C_S(A.getNumberOfRow(),B.getNumberOfColumn());
 
         time.reset();   //timer start
         strassen( A._vecObject , B._vecObject , C_S._vecObject , A._rows , A._columns , B._columns);
+        //real runtimeS = time.elapsed();  //runtime
+        //std::cout << BOLD(FGRN("\n runtime for Strassen ...	")) << runtimeS;
 
+#ifdef USE_LIKWID
+   likwid_markerStopRegion( "Strassen" );
+#endif
 
-      #ifdef USE_LIKWID
-         likwid_markerStopRegion( "Strassen" );
-      #endif
 
 //------------------------------------------------------- Blas ------------------------------------------------------------   
-
-  //const int lda = std::min(A._columns,A._rows);
-  //const int ldb = std::min(B._columns,B._rows);
-  //const int ldc = std::min(C._columns,C._rows);
  
 #ifdef USE_LIKWID
    likwid_markerStartRegion( "Blas" );
 #endif
-   
-   
+
   time.reset();   //timer start
   cblas_dgemm( CblasRowMajor, CblasNoTrans, CblasNoTrans, A._rows, A._columns, B._columns, 1.0, A._vecObject.data(), A._columns, B._vecObject.data(), B._columns, 0.0, C._vecObject.data(), C._columns );
   //real runtimeBlas = time.elapsed();  //runtime
+  //std::cout << BOLD(FGRN("\n runtime for BLAS ...		")) << runtimeBlas;
 
-  
 #ifdef USE_LIKWID
    likwid_markerStopRegion( "Blas" );
-
 #endif
 
-   
- // std::cout << BOLD(FGRN("\n runtime of naive is... ")) << runtime;
- // std::cout << BOLD(FGRN("\n runtime of opti. is... ")) << runtime1;
-  //std::cout << BOLD(FGRN("\n runtime of block. is... ")) << runtimeB;
-  //std::cout << BOLD(FGRN("\n runtime of blas is... ")) << runtimeBlas;
+   } //if strassen
   
-  
-  C_U_B.writeFile(argv[3]);
+   else
+   {
+                std::cout << BOLD(FMAG(" Strassen and BLAS needs Square matrix ... "))<<std::endl;
+   }
+
+   C_U_B.writeFile(argv[3]);	//output data file
+    
   } //else
 } //try
   
@@ -389,12 +393,9 @@ catch (const std::exception& e)
   std::cout << BOLD(FBLU("\n \n ------------------ end program ------------------"));
   std::cout<<"\n";
 
-  
-
-//--------------------------------------------------------------------  
-  #ifdef USE_LIKWID
-     likwid_markerClose();
-#endif 
+#ifdef USE_LIKWID
+   likwid_markerClose();
+#endif
 
   
  return 0;  

@@ -41,7 +41,7 @@ void Matrix::NaiveImplimentation( const Matrix& A,const Matrix& B,Matrix& C)
 
 void Matrix::UnrollingImplimentation(const Matrix& A, const Matrix& B, Matrix& C)
 {
-  assert((A._columns == B._rows) || " Matrix A columns and B rows do not match -navierImplimentation ");	///assert
+  assert((A._columns == B._rows) || " Matrix A columns and B rows do not match -UnrollingImplimentation ");	///assert
   register real temp1 = 0.0,temp2 = 0.0 , temp3 = 0.0,temp4 = 0.0,temp5 = 0.0 , temp6 = 0.0,temp7 = 0.0 ,temp8 = 0.0;
 
 
